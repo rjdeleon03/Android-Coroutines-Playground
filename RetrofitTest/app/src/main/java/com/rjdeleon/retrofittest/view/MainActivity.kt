@@ -1,7 +1,8 @@
-package com.rjdeleon.retrofittest
+package com.rjdeleon.retrofittest.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.rjdeleon.retrofittest.R
 
 class MainActivity : AppCompatActivity() {
 
