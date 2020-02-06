@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.devtides.coroutinesroom.R
 import com.devtides.coroutinesroom.viewmodel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -36,21 +38,40 @@ class MainFragment : Fragment() {
 
     fun observeViewModel() {
         viewModel.signout.observe(this, Observer {
-
+            view?.let {
+                Snackbar.make(it, "Signed out!", Snackbar.LENGTH_SHORT).show()
+                goToSignupScreen(it)
+            }
         })
         viewModel.userDeleted.observe(this, Observer {
+            view?.let {
+                Snackbar.make(it, "User deleted!", Snackbar.LENGTH_SHORT).show()
+                goToSignupScreen(it)
+            }
 
         })
+    }
+
+    private fun goToSignupScreen(view: View) {
+        val action = MainFragmentDirections.actionGoToSignup()
+        Navigation.findNavController(view).navigate(action)
     }
 
     private fun onSignout() {
-        val action = MainFragmentDirections.actionGoToSignup()
-        Navigation.findNavController(usernameTV).navigate(action)
+        viewModel.onSignout()
     }
 
     private fun onDelete() {
-        val action = MainFragmentDirections.actionGoToSignup()
-        Navigation.findNavController(usernameTV).navigate(action)
+        activity?.let {
+            AlertDialog.Builder(it)
+                .setTitle("Delete User")
+                .setMessage("Are you sure you want to delete this user?")
+                .setPositiveButton("Yes"
+                ) { _, _ -> viewModel.onDeleteUser() }
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show()
+        }
     }
 
 }
