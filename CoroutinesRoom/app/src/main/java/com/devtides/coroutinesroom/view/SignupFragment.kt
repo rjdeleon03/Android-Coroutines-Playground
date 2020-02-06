@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.devtides.coroutinesroom.R
 import com.devtides.coroutinesroom.viewmodel.SignupViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_signup.*
 
 class SignupFragment : Fragment() {
@@ -34,17 +35,26 @@ class SignupFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.signupComplete.observe(this, Observer { isComplete ->
-
+            Snackbar.make(view!!, "Signup complete!", Snackbar.LENGTH_SHORT).show()
+            val action = SignupFragmentDirections.actionGoToMain()
+            Navigation.findNavController(signupUsername).navigate(action)
         })
 
         viewModel.error.observe(this, Observer { error ->
-
+            Snackbar.make(view!!, "Error: $error", Snackbar.LENGTH_SHORT).show()
         })
     }
 
     private fun onSignup(v: View){
-        val action = SignupFragmentDirections.actionGoToMain()
-        Navigation.findNavController(v).navigate(action)
+        val username = signupUsername.text.toString()
+        val password = signupPassword.text.toString()
+        val info = otherInfo.text.toString()
+
+        if(username.isBlank() || password.isBlank() || info.isBlank()) {
+            Snackbar.make(view!!, "Please fill out all fields", Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        viewModel.signup(username, password, info)
     }
 
     private fun onGotoLogin(v: View) {
