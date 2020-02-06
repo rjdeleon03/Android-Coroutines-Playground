@@ -10,6 +10,9 @@ import com.rjdeleon.retrofittest.R
 import com.rjdeleon.retrofittest.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+// Countries data endpoint
+// https://raw.githubusercontent.com/DevTides/countries/master/countriesV2.json
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: ListViewModel
