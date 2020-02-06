@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.devtides.coroutinesroom.R
 import com.devtides.coroutinesroom.viewmodel.SignupViewModel
@@ -28,7 +28,7 @@ class SignupFragment : Fragment() {
         signupBtn.setOnClickListener { onSignup(it) }
         gotoLoginBtn.setOnClickListener { onGotoLogin(it) }
 
-        viewModel = ViewModelProviders.of(this).get(SignupViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
         observeViewModel()
     }
 
@@ -52,3 +52,27 @@ class SignupFragment : Fragment() {
         Navigation.findNavController(v).navigate(action)
     }
 }
+
+/*
+@Database(entities = arrayOf(User::class), version = 1)
+abstract class UserDatabase: RoomDatabase() {
+    abstract fun userDao(): UserDao
+
+    companion object {
+        @Volatile private var instance: UserDatabase? = null
+        private val LOCK = Any()
+
+        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
+            instance ?: buildDatabase(context).also {
+                instance = it
+            }
+        }
+
+        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+            context.applicationContext,
+            UserDatabase::class.java,
+            "userdatabase"
+        ).build()
+    }
+}
+ */
