@@ -1,9 +1,10 @@
 package com.rjdeleon.retrofittest.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.rjdeleon.retrofittest.model.Country
 
-class ListViewModel {
+class ListViewModel: ViewModel() {
 
     val countries = MutableLiveData<List<Country>>()
     val countryLoadError = MutableLiveData<String?>()
