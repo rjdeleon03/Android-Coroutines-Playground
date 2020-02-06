@@ -10,11 +10,11 @@ import com.devtides.coroutinesroom.model.User
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: User): Long
+    suspend fun insertUser(user: User): Long
 
     @Query("SELECT * FROM user WHERE username = :username")
-    fun getUser(username: String): User
+    suspend fun getUser(username: String): User
 
     @Query("DELETE FROM user WHERE id = :id")
-    fun deleteUser(id: Long)
+    suspend fun deleteUser(id: Long)
 }
