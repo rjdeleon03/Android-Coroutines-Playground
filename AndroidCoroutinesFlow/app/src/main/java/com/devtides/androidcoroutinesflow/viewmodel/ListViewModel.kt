@@ -7,4 +7,5 @@ class ListViewModel: ViewModel() {
 
     val newsArticles = MutableLiveData<String>()
 
+
 }
