@@ -1,2 +1,5 @@
 CoroutinesRoom/.idea/
 AndroidCoroutinesFlow/.idea
+SharedState/.idea
+SharedState/.gradle
+SharedState/build
